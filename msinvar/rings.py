@@ -14,7 +14,7 @@ EXAMPLES::
 #  Copyright (C) 2021 Sergey Mozgovoy <mozhov@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
-#                  http://www.gnu.org/licenses/
+#                  https://www.gnu.org/licenses/
 # *****************************************************************************
 
 from sage.rings.fraction_field import FractionField_generic
@@ -51,14 +51,14 @@ class RationalFunctionField(FractionField_generic):
         (-1) * (-x + y) * (y + 1)^5
     """
 
-    def __init__(self, vars='y', base=QQ):
+    def __init__(self, vars='y', base=QQ) -> None:
         vars = vars.split(',')
         R = MPolynomialRing_libsingular(base, n=len(vars), names=vars)
         # cat=Category.join([QuotientFields(),LambdaRings()])
         super().__init__(R, element_class=RationalFunction)  # , category=cat)
         LambdaRings.add_ring(self)
 
-    def _repr_(self):
+    def _repr_(self) -> str:
         vars = ', '.join(self.variable_names())
         return 'Field of Rational Functions in ' + vars
 
@@ -73,10 +73,10 @@ class RationalFunction(FractionFieldElement):
         """See :meth:`root_vars`."""
         return root_vars(self, k)
 
-    def simp(f):
-        if f == 0:
-            return f
-        num, den = f.numerator(), f.denominator()
+    def simp(self):
+        if self == 0:
+            return self
+        num, den = self.numerator(), self.denominator()
         content = den.content()
         num /= content
         den /= content
